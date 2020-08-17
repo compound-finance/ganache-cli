@@ -19,9 +19,12 @@ COPY --from=builder "/app/node_modules/sha3/build/Release" "./node_modules/sha3/
 COPY --from=builder "/app/node_modules/ganache-core/node_modules/websocket/build/Release" "./node_modules/ganache-core/node_modules/websocket/build/Release/"
 COPY --from=builder "/app/build/ganache-core.docker.cli.js" "./ganache-core.docker.cli.js"
 COPY --from=builder "/app/build/ganache-core.docker.cli.js.map" "./ganache-core.docker.cli.js.map"
+COPY --from=builder "/app/entrypoint.sh" "./entrypoint.sh"
+COPY --from=builder "/app/Proxy.js" "./Proxy.js"
 
 ENV DOCKER true
 
 EXPOSE 8545
+EXPOSE 8546
 
-ENTRYPOINT ["node", "/app/ganache-core.docker.cli.js"]
+ENTRYPOINT ["./entrypoint.sh"]
